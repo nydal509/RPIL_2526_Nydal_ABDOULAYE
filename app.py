@@ -14,9 +14,13 @@ cursor.execute("SHOW TABLES")
 print(cursor.fetchall())
 @app.route("/", methods=["GET", "POST"])
 def index():
+
     mentors_compatibles = []
+    recherche_effectuee = False
 
     if request.method == "POST":
+        recherche_effectuee = True
+
         matiere = request.form["matiere"].strip().lower()
         heure = int(request.form["heure"])
         filiere = request.form["filiere"].strip().lower()
@@ -30,12 +34,12 @@ def index():
                 m.strip().lower()
                 for m in mentor["matieres"].split(",")
             ]
-
-            if matiere in matieres_mentor:
-                score = 50
-
-                if abs(mentor["disponibilite"] - heure) <= 1:
-                    score += 30
+            score=0
+            if (
+                matiere in matieres_mentor
+                and abs(mentor["disponibilite"] - heure) <= 1
+            ):
+                score = 80
 
                 if mentor["filiere"].lower() == filiere:
                     score += 20
@@ -47,17 +51,18 @@ def index():
                     "format_mentorat": mentor["format_mentorat"],
                     "score": score
                 })
+                
 
-        mentors_compatibles.sort(
-            key=lambda x: x["score"],
-            reverse=True
+    mentors_compatibles.sort(
+     key=lambda x: x["score"],
+     reverse=True
         )
 
     return render_template(
         "index.html",
-        mentors=mentors_compatibles
+        mentors=mentors_compatibles,
+        recherche_effectuee=recherche_effectuee
     )
-
 
 if __name__ == "__main__":
     app.run(debug=True)

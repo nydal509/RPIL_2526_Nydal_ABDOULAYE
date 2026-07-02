@@ -95,10 +95,11 @@ h5 {
             <p>Score : {{ m.score }}%</p>
         </div>
     {% endfor %}
-{% else %}
+    {% endif%}
+    {% if recherche_effectuee and mentors|length == 0 %}
     <div class="alert alert-secondary">
         Aucun mentor compatible trouvé.
     </div>
-{% endif %}
+    {% endif %}
 </body>
 </html>
