@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Mentors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+   <style>
+    body {
+    background-color: #f5f6f8;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #2b2b2b;
+}
+
+h2 {
+    color: #1f2a37;
+    font-weight: 600;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    color: #2b2b2b;
+}
+
+form.card {
+    background-color: #ffffff;
+}
+
+input {
+    border-radius: 8px !important;
+    border: 1px solid #dcdcdc !important;
+    padding: 10px !important;
+    background-color: #ffffff !important;
+    color: #2b2b2b !important;
+}
+
+.btn-primary {
+    background-color: #2f3e4e;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #1f2a37;
+}
+
+.mentor-card {
+    transition: 0.2s ease-in-out;
+}
+
+.mentor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+h5 {
+    color: #1f2a37;
+    font-weight: 600;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+}
+</style>
+</style>
+</head>
+
+<body class="container mt-5">
+
+    <h2 class="mb-4">Recherche de mentors compatibles</h2>
+
+    <form method="POST" class="card p-3 mb-4">
+        <input type="text" name="matiere" class="form-control mb-2" placeholder="Matière recherchée" required>
+
+        <input type="number" name="heure" class="form-control mb-2" placeholder="Heure souhaitée (ex: 18)" required>
+
+        <input type="text" name="filiere" class="form-control mb-2" placeholder="Filière" required>
+
+        <button class="btn btn-primary">Rechercher</button>
+    </form>
+
+    {% if mentors|length > 0 %}
+    {% for m in mentors %}
+        <div class="card p-3 mb-3 mentor-card">
+            <h5>{{ m.nom }}</h5>
+            <p>Matière : {{ m.matiere_commune }}</p>
+            <p>Disponibilité : {{ m.disponibilite }}h</p>
+            <p>Format : {{ m.format_mentorat }}</p>
+            <p>Score : {{ m.score }}%</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-secondary">
+        Aucun mentor compatible trouvé.
+    </div>
+{% endif %}
+</body>
+</html>
