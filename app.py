@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request
 import mysql.connector
 
@@ -66,3 +67,15 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+=======
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def accueil():
+    return "Projet Recherche de Mentor"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+>>>>>>> f2e2a7861e631ac7c6aa7b63baa9f8c5863376fa
